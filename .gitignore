@@ -1,0 +1,42 @@
+# Catkin and CMake build output
+build/
+devel/
+install/
+build_isolated/
+devel_isolated/
+install_isolated/
+log/
+logs/
+cmake-build-*/
+.catkin_tools/
+.catkin_workspace
+CMakeCache.txt
+CMakeFiles/
+compile_commands.json
+
+# Standalone binaries from the serial examples
+/ros/项目/serial_m/serial_m/serial
+/ros/项目/serial_m/serial_m/obj/
+/ros/项目/stm32/series
+*.o
+
+# Archives duplicated by the extracted example folders
+/ros/例程/ROS项目文件.rar
+/ros/例程/wpr_simulation-master.zip
+
+# Local recordings and editor files
+*.bag
+*.bag.active
+*.log
+.vscode/
+.idea/
+*.swp
+__pycache__/
+*.py[cod]
+Thumbs.db
+.DS_Store
+
+# Local environment settings
+.env
+.env.*
+!.env.example
