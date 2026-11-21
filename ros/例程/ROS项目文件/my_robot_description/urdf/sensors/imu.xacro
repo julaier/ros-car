@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <!-- 创建一个IMU传感器的链接 -->
+  <link name="imu_link"/>
+
+  <!-- 定义一个固定关节，用于将IMU传感器与底盘连接 -->
+  <joint name="imu_joint" type="fixed">
+    
+    <!-- 父链接为机器人底盘 base_link，表示IMU传感器与底盘连接 -->
+    <parent link="base_link"/> <!-- 底盘中心 -->
+    
+    <!-- 子链接为 imu_link，表示IMU传感器本身 -->
+    <child link="imu_link"/>
+    
+    <!-- 定义IMU相对于底盘的位姿 -->
+    <origin xyz="0 0 0" rpy="0 0 0"/> <!-- 相对于底盘中心的xyz，和旋转角度 -->
+  </joint>
+</robot>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>  
+<!-- XML声明，指定版本为1.0 -->
+
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- 定义机器人模型，名称为"omni_robot"，并引入xacro命名空间 -->
+
+  <!-- 引入其他XACRO文件： -->
+  <xacro:include filename="$(find my_robot_description)/urdf/my_robot_body.xacro" />
+  <!-- 包含机器人的基本结构（车体）定义 -->
+  <xacro:include filename="$(find my_robot_description)/urdf/sensors/lidar.xacro" />
+  <!-- 包含激光雷达传感器的定义 -->
+  <xacro:include filename="$(find my_robot_description)/urdf/sensors/imu.xacro" />
+  <!-- 包含IMU传感器的定义 -->
+  <xacro:include filename="$(find my_robot_description)/urdf/sensors/camera.xacro" />
+  <!-- 包含摄像头传感器的定义 -->
+
+  <!-- 定义机器人的一些物理参数 -->
+  <xacro:property name="base_length" value="0.4" />
+  <!-- 车体长度，单位：米 -->
+  <xacro:property name="base_width"  value="0.3" />
+  <!-- 车体宽度，单位：米 -->
+  <xacro:property name="base_height" value="0.1" />
+  <!-- 车体高度，单位：米 -->
+  <xacro:property name="wheel_radius" value="0.05" />
+  <!-- 轮子半径，单位：米 -->
+  <xacro:property name="wheel_width"  value="0.04" />
+  <!-- 轮子宽度，单位：米 -->
+
+  
+  <!--雷达参数-->
+  <xacro:property name="lidar_x" value="0.1" />
+  <!--雷达x位置-->
+  <xacro:property name="lidar_z" value="0.1" />
+  <!--雷达z位置-->
+  
+  <!--陀螺仪参数-->
+  <xacro:property name="imu_x"   value="0.0" />
+  <xacro:property name="imu_z"   value="0.02" />
+
+  <!--相机参数-->
+  <xacro:property name="cam_x"   value="0.2" />
+  <xacro:property name="cam_z"   value="0.05" />
+  <!-- 引用已定义的机器人结构 -->
+  <xacro:robot_body />
+
+  <!-- 定义并位置激光雷达传感器 -->
+  <xacro:lidar_macro prefix="laser" parent="base_link" x="lidar_x" z="lidar_z" />
+  <!-- 激光雷达传感器放置在base_link上的位置偏移量x=0.1，z=0.1 -->
+
+  <!-- 定义并位置IMU传感器 -->
+  <xacro:imu_macro prefix="imu" parent="base_link" x="imu_x" z="imu_z" />
+  <!-- IMU传感器放置在base_link上的位置偏移量x=0.0，z=0.02 -->
+
+  <!-- 定义并位置摄像头传感器 -->
+  <xacro:camera_macro prefix="camera" parent="base_link" x="cam_x" z="cam_z" />
+  <!-- 摄像头传感器放置在base_link上的位置偏移量x=0.2，z=0.05 -->
+
+</robot>

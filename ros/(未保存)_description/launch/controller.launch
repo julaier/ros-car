@@ -1,0 +1,9 @@
+<launch>
+
+<rosparam file="$(find (未保存)_description)/launch/controller.yaml" command="load"/>
+<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="(未保存)" args="旋转 12_position_controller 旋转 13_position_controller 旋转 14_position_controller 旋转 15_position_controller joint_state_controller "/>
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+  <remap from="/joint_states" to="/(未保存)/joint_states"/>
+</node>
+
+</launch>

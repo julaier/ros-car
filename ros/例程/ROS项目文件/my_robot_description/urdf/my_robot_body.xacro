@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!-- XML声明，指定版本为1.0 -->
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- 定义一个机器人模型，引用xacro命名空间 -->
+
+  <!-- 定义机器人主体（robot_body）宏 -->
+  <xacro:macro name="robot_body">
+
+    <!-- 创建基座的“base_footprint” -->
+    <link name="base_footprint"/>
+    <!-- 定义一个固定关节（base_joint），连接基座和主车体 -->
+    <joint name="base_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+      <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+      <!-- 设置关节的原点，相对位置是(0, 0, wheel_radius)，不发生旋转 -->
+    </joint>
+
+    <!-- 创建车体的主体部分“base_link”，包含外形、颜色等 -->
+    <link name="base_link">
+      <visual>
+        <geometry><box size="${base_length} ${base_width} ${base_height}"/></geometry>
+        <!-- 车体的几何形状是一个长方体，尺寸由宏参数指定 -->
+        <material name="blue"><color rgba="0 0 0.8 1"/></material>
+        <!-- 车体的颜色是蓝色 -->
+      </visual>
+    </link>
+
+    <!-- 定义全向轮（omni_wheel）的宏 -->
+    <xacro:macro name="omni_wheel" params="prefix x y">
+      <!-- 轮子的命名方式依赖于前缀（prefix） -->
+      
+      <link name="${prefix}_wheel">
+        <visual>
+          <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+          <!-- 轮子的原点位置是(0, 0, 0)，但绕X轴旋转π/2角度，以保证轮子的朝向正确 -->
+          <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+          <!-- 轮子的几何形状是一个圆柱，半径由宏参数指定，宽度为wheel_width -->
+          <material name="black"><color rgba="0 0 0 1"/></material>
+          <!-- 轮子的颜色是黑色 -->
+        </visual>
+      </link>
+      
+      <!-- 定义轮子与车体连接的关节 -->
+      <joint name="${prefix}_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="${prefix}_wheel"/>
+        <origin xyz="${x} ${y} 0" rpy="0 0 0"/>
+        <!-- 关节原点的相对位置由参数x和y确定，z轴坐标为0 -->
+        <axis xyz="0 1 0"/>
+        <!-- 轮子的旋转轴是Y轴 -->
+      </joint>
+    </xacro:macro>
+
+    <!-- 使用“omni_wheel”宏创建四个全向轮，并指定每个轮子的相对位置 -->
+    <xacro:omni_wheel prefix="front_left"  x="0.15"  y="0.12"/>
+    <!-- 前左轮 -->
+    <xacro:omni_wheel prefix="front_right" x="0.15"  y="-0.12"/>
+    <!-- 前右轮 -->
+    <xacro:omni_wheel prefix="back_left"   x="-0.15" y="0.12"/>
+    <!-- 后左轮 -->
+    <xacro:omni_wheel prefix="back_right"  x="-0.15" y="-0.12"/>
+    <!-- 后右轮 -->
+
+  </xacro:macro>
+</robot>
